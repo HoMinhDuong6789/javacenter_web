@@ -1,0 +1,14 @@
+package com.trungtamjava;
+
+import java.io.PrintWriter;
+
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+
+@WebServlet(urlPatterns = {"/servlet1"})
+public class Servlet2 extends HttpServlet{
+	resp.setContentType("text/html");
+	PrintWriter printWriter= resp.getWriter();
+	printWriter.println("xin chao trung tam java");
+	getServletContext().setAttribute("name", "trung tam java");
+}

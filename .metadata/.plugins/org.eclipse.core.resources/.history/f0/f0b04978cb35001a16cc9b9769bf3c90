@@ -1,0 +1,9 @@
+package com.trungtamjava.session;
+
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+
+@WebServlet(urlPatterns = {"/session2"})
+public class Session2 extends HttpServlet{
+
+}

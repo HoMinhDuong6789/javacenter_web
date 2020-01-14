@@ -1,0 +1,9 @@
+package com.trungtamjava;
+
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+
+@WebServlet(urlPatterns = {"/servlet2"})
+public class Servlet2 extends HttpServlet{
+
+}

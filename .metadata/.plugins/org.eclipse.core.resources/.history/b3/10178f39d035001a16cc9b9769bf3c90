@@ -1,0 +1,5 @@
+package com.trungtamjava.session.example;
+
+public class WellcomeSession {
+
+}

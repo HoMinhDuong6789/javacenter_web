@@ -1,0 +1,196 @@
+Restful api
+
+Jwt
+
+Tạm thời đi hen
+
+Json nữa
+
+
+
+Lesson 1: java servlet: giới thiệu java
+
+
+Lesson 2: Thiết lập môi trường Java
+
+Lesson 3: Chu kì sống của Servlet và ví dự servlet
+
+	====================
+
+Lesson 4: cấu hình một java servlet bằng XML
+	
+	<servlet>
+		<servlet-name>DemoServlet</servlet-name>
+		<servlet-class>com.trungtamjava.DemoServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+    </servlet>
+  
+    <servlet-mapping>
+		<servlet-name>DemoServlet</servlet-name>
+		<url-pattern>/demo</url-pattern>
+    </servlet-mapping>
+	
+	====================
+	
+Lesson 5: cấu hình một java servlet bằng Anotation
+	import jar: javax.servlet.api-4.0.1.jar
+	@WebServlet(urlPatterns={"/xin-chao","/hello"})
+	
+	====================
+	
+Lesson 6: ServletRequest trong java
+	các phương thức ở request chủ yếu là get
+	req.getSession();
+	lay thong tin tu header
+	header tuc la cac thong tin ma trinh duyet gui len tu clinent, cac thong tin: contentype
+	header duoc dinh dang theo kieu key-value
+	
+	//code lay thong tin
+	Enumeration<String> keys= req.getHeaderNames();
+	while (keys.hasMoreElements()) {
+		String key = (String) keys.nextElement();
+		System.out.println(key +" "+req.getHeader(key));
+	}
+	
+	====================
+	
+Lesson 7: ServletResponse trong java
+	một số hàm quan trọng
+	resp.addCookie(new Cookie("a", "aa"));  // tao cookie
+	resp.addHeader("a", "aaa");				// set thong tin Header tra ve
+	resp.sendError(200);					// set ma code loi
+	
+	====================
+	
+Lesson 8: Servlet Config trong Java Servlet
+	dùng để cofig một số tham số
+	C1: Anotation
+		//@WebServlet(urlPatterns={"/test-config"}, initParams={@WebInitParam(name="name", value = "trung tam java")})
+	
+	C2: XML
+		
+		<!--cau hinh thay cho kieu Anotation class ServletConfigDemo  -->
+  
+		<servlet>
+			<servlet-name>ConfigDemo</servlet-name>
+			<servlet-class>com.trungtamjava.ServletConfigDemo</servlet-class>
+  	
+		<init-param>
+			<param-name>name</param-name>
+			<param-value>trung tam java</param-value>
+		</init-param>
+		</servlet>
+  
+		<servlet-mapping>
+			<servlet-name>ConfigDemo</servlet-name>
+			<url-pattern>/config</url-pattern>
+		</servlet-mapping>
+	
+	====================
+	
+Lesson 9: Response code trong Java Servlet
+		
+		resp.sendError(ma_code);
+		//https://viblo.asia/p/tim-hieu-ve-http-status-code-lA7GKwx5GKZQ
+	
+	====================
+	
+Lesson 10: đọc dữ liệu gửi lên từ client qua URL trong Java Web	
+		String ten = req.getParameter("ten");
+		http://localhost:8080/DemoServlet/web-request?ten=Duong&diachi=Hoa Khanh
+		khi có nhiều tham số dùng &
+		
+	====================
+
+Lesson 11: Định dạng dữ liệu từ Post và Get trong HTML Form trong servlet 
+	tạo một servlet FormPerson 
+		@WebServlet(urlPatterns = {"/form-nguoi-dung"})
+		
+		dùng lệnh Printwriter đẻ vẽ form-nguoi-dung
+
+		writer.println("<form action='/DemoServlet/them-nguoi-dung' method='post'>");
+		writer.println("ten:<input type='text' name='ten'>");
+		writer.println("</br>tuoi:<input type='text' name='tuoi'>");
+		writer.println("</br>diachi:<input type='text' name='diachi'>");
+		writer.println("</br><input type='submit' valur='submit'>");
+		writer.println("</form>");
+		
+		
+	tạo một PersonServlet
+		có @WebServlet(urlPatterns = { "/them-nguoi-dung" })
+		
+		@Override
+		protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+			resp.setContentType("text/html");
+			PrintWriter writer= resp.getWriter();
+			String ten = req.getParameter("ten");	// chú ý cáo parameter này phải mapping với name ở form từ servlet kia
+			String tuoi = req.getParameter("tuoi");
+			String diachi = req.getParameter("diachi");
+			writer.println("phuong thuc get");
+			writer.println("ten\t"+ ten +"\ntuoi\t"+"\n dia chi\t"+diachi);
+		}
+	
+	====================
+		
+Leson 12: thẻ wellcome file trong list trong webxml của Java Servlet
+
+	
+	====================
+	
+Leson 13: bắt lỗi xảy ra về trang thân thiện trong JavaServlet
+	
+	cấu hình trong file xml
+	<error-page>
+		<error-code>404</error-code>
+		<location>/handle-error</location>	//ten servlet anotation
+    </error-page>
+
+	====================
+	
+Leson 14: cách deploy một Java Servlet bằng file war
+		
+	Export project -> war	
+	copy file .war vào thư mục webapp của tomcat server
+	cmd tai thư mục Tomcat/bin
+	win: startup.bat
+	mac: ./startup.sh
+	
+
+Lesson 15: Redirect chuyển howsng trang web trong java Servlet
+		
+		//cach 1:
+	
+		resp.sendRedirect("https://www.youtube.com/watch?v=_U08pLCxRoc&list=PLFn_qRkU56WGIb1yYxMtFgYyJVrjOXW3c&index=15");
+		
+		//cach 2:
+		resp.setStatus(resp.SC_MOVED_PERMANENTLY);
+		resp.setHeader("Location", "https://www.youtube.com/watch?v=_U08pLCxRoc&list=PLFn_qRkU56WGIb1yYxMtFgYyJVrjOXW3c&index=15");
+
+
+Lesson 16: Auto Refresh tự động làm mới trang java Servlet
+
+	resp.setContentType("text/html");
+	resp.setHeader("Refresh", "1");
+	PrintWriter writer = resp.getWriter();
+	writer.println("thoi gian hien tai\t"+new Date());
+	
+Lesson 17: RequestDispatcher trong java Servlet
+	dùng để phân phối request tới các nguồn tài nguyên khác
+	2 phương thức chính là forward() và include()
+	
+	forward: RequestDispatcher sẽ forward request từ servlet 1 tới servlet 2
+hoặc một file html nào đó, sau đó từ servlet 2 sẽ trả về một response cho client(hình trong note.docx)
+		RequestDispatcher dispatcher= req.getRequestDispatcher("/wellcome");
+		dispatcher.forward(req, resp);
+
+
+
+	include: client gửi một request tới servlet 1, sau đó server 1 sẽ include nội dung của 
+servlet 2 vào -> sau đó sẽ trả về nội dung bao nội của ser	RequestDispatcher sẽ include 
+		RequestDispatcher dispatcher= req.getRequestDispatcher("/form-login");
+		dispatcher.include(req, resp);
+		
+Lesson 18: ServletContext trong Java servlet
+
+	
+	
